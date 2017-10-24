@@ -55,17 +55,16 @@ namespace CodeChallengeTests
         }
 
         [Fact]
-        public void PlaceEachElementFirstAsManyTimesAsSizeOfInput()
+        public void PlaceEachElementFirstProportionately()
         {
             var input = new List<int> { 1, 2, 3, 4, 5 };
-            var expectedElementCount = input.Count;
             var output = Permutation.Permute(input);
-            foreach (var element in input)
+            var expectedElementCount = output.Count() / input.Count();
+           foreach (var element in input)
             {
                Assert.Equal(expectedElementCount, output.Count(perm => perm.First() == element));
             }
 
         }
-
     }
 }
