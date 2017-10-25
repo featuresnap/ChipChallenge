@@ -11,7 +11,12 @@ namespace CodeChallenge
         public static InputData ParseInput(IEnumerable<string> input)
         {
             var firstLine = ProcessLine(input.First());
-            return new InputData(firstLine.Item1, firstLine.Item2, null);
+            var otherLines =
+                input
+                    .Skip(1)
+                    .Select(ProcessLine);
+
+            return new InputData(firstLine.Item1, firstLine.Item2, otherLines);
         }
 
         private static (string, string) ProcessLine(string line)
