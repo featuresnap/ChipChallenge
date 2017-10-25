@@ -21,7 +21,6 @@ namespace CodeChallenge
                 from otherPermutation in Permute(rest)
                 select otherPermutation.Prepend(v);
         }
-
     }
 
     internal static class IEnumerableExtensions
