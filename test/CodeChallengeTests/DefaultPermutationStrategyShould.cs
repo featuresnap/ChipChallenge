@@ -6,13 +6,19 @@ using CodeChallenge;
 
 namespace CodeChallengeTests
 {
-    public class PermutationShould
+    public class DefaultPermutationStrategyShould
     {
+        private DefaultPermutationStrategy<int> _defaultPermutationStrategy;
+
+        public DefaultPermutationStrategyShould()
+        {
+            _defaultPermutationStrategy = new DefaultPermutationStrategy<int>();
+        }
         [Fact]
         public void PermuteForEmptyInput()
         {
             var input = new List<int>();
-            var output = Permutation.Permute(input);
+            var output = _defaultPermutationStrategy.Permute(input);
             Assert.Collection(output, (x => Assert.Equal(0, x.Count())));
         }
 
@@ -20,7 +26,7 @@ namespace CodeChallengeTests
         public void PermuteForSingleElement()
         {
             var input = new List<int>() { 1 };
-            var output = Permutation.Permute(input);
+            var output = _defaultPermutationStrategy.Permute(input);
             Assert.Collection(output, x => Assert.Equal(1, x.Single()));
         }
 
@@ -28,7 +34,7 @@ namespace CodeChallengeTests
         public void PermuteTwoElements()
         {
             var input = new List<int> { 1, 2 };
-            var output = Permutation.Permute(input);
+            var output = _defaultPermutationStrategy.Permute(input);
             Assert.Equal(2, output.Count());
         }
 
@@ -36,7 +42,7 @@ namespace CodeChallengeTests
         public void PermuteThreeElements()
         {
             var input = new List<int> { 1, 2, 3 };
-            var output = Permutation.Permute(input);
+            var output = _defaultPermutationStrategy.Permute(input);
             Assert.Equal(6, output.Count());
         }
 
@@ -44,7 +50,7 @@ namespace CodeChallengeTests
         public void PlaceEachElementInEachPermutation()
         {
             var input = new List<int> { 1, 2, 3, 4, 5 };
-            var output = Permutation.Permute(input);
+            var output = _defaultPermutationStrategy.Permute(input);
             foreach (var perm in output)
             {
                 foreach (var element in input)
@@ -58,7 +64,7 @@ namespace CodeChallengeTests
         public void PlaceEachElementFirstProportionately()
         {
             var input = new List<int> { 1, 2, 3, 4, 5 };
-            var output = Permutation.Permute(input);
+            var output = _defaultPermutationStrategy.Permute(input);
             var expectedElementCount = output.Count() / input.Count();
            foreach (var element in input)
             {

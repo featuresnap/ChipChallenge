@@ -5,15 +5,20 @@ using System.Text;
 
 namespace CodeChallenge
 {
-    public class Permutation
+    public interface PermutationStrategy<T>
     {
-        public static IEnumerable<IEnumerable<T>> Permute<T>(IEnumerable<T> input)
+        IEnumerable<IEnumerable<T>> Permute(IEnumerable<T> input);
+    }
+
+    public class DefaultPermutationStrategy<T> : PermutationStrategy<T>
+    {
+        public IEnumerable<IEnumerable<T>> Permute(IEnumerable<T> input)
         {
             if(input.Count() == 0) return new List<T[]> { new T[]{}};
             if(input.Count() == 1) return new List<T[]> {new[]{input.First()}};
             return from v in input
-                let others = input.ExceptThis(v)
-                from otherPermutation in Permute<T>(others)
+                let rest = input.ExceptOne(v)
+                from otherPermutation in Permute(rest)
                 select otherPermutation.Prepend(v);
         }
 
@@ -21,7 +26,7 @@ namespace CodeChallenge
 
     internal static class IEnumerableExtensions
     {
-        public static IEnumerable<T> ExceptThis<T>(this IEnumerable<T> values, T value)
+        public static IEnumerable<T> ExceptOne<T>(this IEnumerable<T> values, T value)
         {
             return values.Except(new[] {value});
         }
